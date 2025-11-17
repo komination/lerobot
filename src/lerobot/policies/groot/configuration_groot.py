@@ -99,7 +99,7 @@ class GrootConfig(PreTrainedConfig):
 
     # Dataset parameters
     # Video backend to use for training ('decord' or 'torchvision_av')
-    video_backend: str = "decord"
+    video_backend: str = "torchvision_av"
 
     # Whether to balance dataset weights in mixture datasets
     balance_dataset_weights: bool = True
