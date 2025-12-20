@@ -368,3 +368,6 @@ ignore_errors = false
 # [[tool.mypy.overrides]]
 # module = "lerobot.scripts.*"
 # ignore_errors = false
+
+[tool.uv.extra-build-dependencies]
+flash-attn = ["torch"]
