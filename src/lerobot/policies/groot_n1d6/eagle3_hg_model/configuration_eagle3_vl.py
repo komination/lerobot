@@ -89,6 +89,8 @@ class Eagle3_VLConfig(PretrainedConfig):
         output['downsample_ratio'] = self.downsample_ratio
         output['template'] = self.template
         output['image_token_index'] = self.image_token_index
-        output['_attn_implementation'] = self._attn_implementation
-        output['_attn_implementation_autoset'] = self._attn_implementation_autoset
+        output['_attn_implementation'] = getattr(self, "_attn_implementation", None)
+        output['_attn_implementation_autoset'] = getattr(
+            self, "_attn_implementation_autoset", False
+        )
         return output
