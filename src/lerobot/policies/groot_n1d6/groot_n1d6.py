@@ -146,6 +146,9 @@ class EagleBackbone(nn.Module):
                 raise ValueError("Eagle-Block2A-2B-v2 requires bfloat16")
             eagle_path = DEFAULT_VENDOR_EAGLE_PATH
             config = AutoConfig.from_pretrained(str(eagle_path), trust_remote_code=True)
+            if hasattr(config, "text_config"):
+                config.text_config._attn_implementation = "flash_attention_2"
+                config.text_config._attn_implementation_autoset = True
             self.model = AutoModel.from_config(config, trust_remote_code=True)
         else:
             raise ValueError(f"Model {model_name} not supported")
