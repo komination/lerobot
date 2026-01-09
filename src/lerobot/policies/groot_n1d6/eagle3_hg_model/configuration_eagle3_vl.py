@@ -71,6 +71,9 @@ class Eagle3_VLConfig(PretrainedConfig):
         self.loss_version = loss_version
         self.tie_word_embeddings = self.text_config.tie_word_embeddings
         self.image_token_index = image_token_index
+        self.initializer_range = kwargs.get(
+            "initializer_range", getattr(self.text_config, "initializer_range", 0.02)
+        )
 
     def to_dict(self):
         """
@@ -89,6 +92,7 @@ class Eagle3_VLConfig(PretrainedConfig):
         output['downsample_ratio'] = self.downsample_ratio
         output['template'] = self.template
         output['image_token_index'] = self.image_token_index
+        output['initializer_range'] = self.initializer_range
         output['_attn_implementation'] = getattr(self, "_attn_implementation", None)
         output['_attn_implementation_autoset'] = getattr(
             self, "_attn_implementation_autoset", False
