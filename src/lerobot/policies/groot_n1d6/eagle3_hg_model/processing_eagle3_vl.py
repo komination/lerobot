@@ -41,7 +41,14 @@ import numpy as np
 
 from transformers.feature_extraction_utils import BatchFeature
 from transformers.image_processing_utils import select_best_resolution
-from transformers.image_utils import ImageInput, VideoInput, get_image_size, to_numpy_array
+try:
+    from transformers.image_utils import ImageInput, VideoInput, get_image_size, to_numpy_array
+except ImportError:
+    from transformers.image_utils import ImageInput, get_image_size, to_numpy_array
+
+    from typing import Any as _Any
+
+    VideoInput = _Any
 from transformers.processing_utils import ProcessingKwargs, ProcessorMixin, Unpack
 from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 from transformers.utils import logging
