@@ -32,6 +32,7 @@ from lerobot.envs.utils import env_to_policy_features
 from lerobot.policies.act.configuration_act import ACTConfig
 from lerobot.policies.diffusion.configuration_diffusion import DiffusionConfig
 from lerobot.policies.groot.configuration_groot import GrootConfig
+from lerobot.policies.groot_n1d6.configuration_groot_n1d6 import GrootN1d6Config
 from lerobot.policies.pi0.configuration_pi0 import PI0Config
 from lerobot.policies.pi05.configuration_pi05 import PI05Config
 from lerobot.policies.pretrained import PreTrainedPolicy
@@ -115,6 +116,10 @@ def get_policy_class(name: str) -> type[PreTrainedPolicy]:
         from lerobot.policies.groot.modeling_groot import GrootPolicy
 
         return GrootPolicy
+    elif name == "groot_n1d6":
+        from lerobot.policies.groot_n1d6.modeling_groot_n1d6 import GrootN1d6Policy
+
+        return GrootN1d6Policy
     elif name == "xvla":
         from lerobot.policies.xvla.modeling_xvla import XVLAPolicy
 
@@ -169,6 +174,8 @@ def make_policy_config(policy_type: str, **kwargs) -> PreTrainedConfig:
         return RewardClassifierConfig(**kwargs)
     elif policy_type == "groot":
         return GrootConfig(**kwargs)
+    elif policy_type == "groot_n1d6":
+        return GrootN1d6Config(**kwargs)
     elif policy_type == "xvla":
         return XVLAConfig(**kwargs)
     elif policy_type == "wall_x":
@@ -248,6 +255,21 @@ def make_pre_post_processors(
             # Also ensure postprocessing slices to env action dim and unnormalizes with dataset stats
             env_action_dim = policy_cfg.output_features["action"].shape[0]
             postprocessor_overrides["groot_action_unpack_unnormalize_v1"] = {
+                "stats": kwargs.get("dataset_stats"),
+                "normalize_min_max": True,
+                "env_action_dim": env_action_dim,
+            }
+            kwargs["preprocessor_overrides"] = preprocessor_overrides
+            kwargs["postprocessor_overrides"] = postprocessor_overrides
+        elif isinstance(policy_cfg, GrootN1d6Config):
+            preprocessor_overrides = {}
+            postprocessor_overrides = {}
+            preprocessor_overrides["groot_n1d6_pack_inputs_v1"] = {
+                "stats": kwargs.get("dataset_stats"),
+                "normalize_min_max": True,
+            }
+            env_action_dim = policy_cfg.output_features["action"].shape[0]
+            postprocessor_overrides["groot_n1d6_action_unpack_unnormalize_v1"] = {
                 "stats": kwargs.get("dataset_stats"),
                 "normalize_min_max": True,
                 "env_action_dim": env_action_dim,
@@ -361,6 +383,15 @@ def make_pre_post_processors(
         from lerobot.policies.groot.processor_groot import make_groot_pre_post_processors
 
         processors = make_groot_pre_post_processors(
+            config=policy_cfg,
+            dataset_stats=kwargs.get("dataset_stats"),
+        )
+    elif isinstance(policy_cfg, GrootN1d6Config):
+        from lerobot.policies.groot_n1d6.processor_groot_n1d6 import (
+            make_groot_n1d6_pre_post_processors,
+        )
+
+        processors = make_groot_n1d6_pre_post_processors(
             config=policy_cfg,
             dataset_stats=kwargs.get("dataset_stats"),
         )
