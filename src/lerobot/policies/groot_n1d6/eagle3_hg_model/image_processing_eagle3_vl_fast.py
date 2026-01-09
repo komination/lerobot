@@ -8,14 +8,18 @@
 from typing import List, Optional, Union
 
 from transformers.image_processing_utils import BatchFeature, get_patch_output_size, select_best_resolution
-from transformers.image_processing_utils_fast import (
-    BASE_IMAGE_PROCESSOR_FAST_DOCSTRING,
-    BASE_IMAGE_PROCESSOR_FAST_DOCSTRING_PREPROCESS,
-    BaseImageProcessorFast,
-    DefaultFastImageProcessorKwargs,
-    divide_to_patches,
-    group_images_by_shape,
-    reorder_images,
+from transformers import image_processing_utils_fast as _image_processing_utils_fast
+
+BaseImageProcessorFast = _image_processing_utils_fast.BaseImageProcessorFast
+DefaultFastImageProcessorKwargs = _image_processing_utils_fast.DefaultFastImageProcessorKwargs
+divide_to_patches = _image_processing_utils_fast.divide_to_patches
+group_images_by_shape = _image_processing_utils_fast.group_images_by_shape
+reorder_images = _image_processing_utils_fast.reorder_images
+BASE_IMAGE_PROCESSOR_FAST_DOCSTRING = getattr(
+    _image_processing_utils_fast, "BASE_IMAGE_PROCESSOR_FAST_DOCSTRING", ""
+)
+BASE_IMAGE_PROCESSOR_FAST_DOCSTRING_PREPROCESS = getattr(
+    _image_processing_utils_fast, "BASE_IMAGE_PROCESSOR_FAST_DOCSTRING_PREPROCESS", ""
 )
 from transformers.image_utils import (
     OPENAI_CLIP_MEAN,
