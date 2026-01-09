@@ -204,6 +204,10 @@ lerobot-edit-dataset="lerobot.scripts.lerobot_edit_dataset:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"lerobot.policies.groot" = ["eagle2_hg_model/*"]
+"lerobot.policies.groot_n1d6" = ["eagle3_hg_model/*"]
+
 [tool.ruff]
 target-version = "py310"
 line-length = 110
