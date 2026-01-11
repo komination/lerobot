@@ -23,7 +23,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.distributions import Beta
-from transformers import PreTrainedModel
 from transformers.feature_extraction_utils import BatchFeature
 
 try:
@@ -388,7 +387,7 @@ class Gr00tN1d6ActionHead(nn.Module):
         return next(iter(self.parameters())).dtype
 
 
-class Gr00tN1d6(PreTrainedModel):
+class Gr00tN1d6(nn.Module):
     """GR00T N1.6 Vision-Language-Action model.
 
     This is the main model class that combines:
@@ -410,7 +409,7 @@ class Gr00tN1d6(PreTrainedModel):
             config: Model configuration
             transformers_loading_kwargs: Additional kwargs for transformers loading
         """
-        super().__init__(config)
+        super().__init__()
         self.config = config
 
         if transformers_loading_kwargs is None:
