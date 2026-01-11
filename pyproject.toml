@@ -136,6 +136,16 @@ groot = [
     "ninja>=1.11.1,<2.0.0",
     "flash-attn>=2.5.9,<3.0.0 ; sys_platform != 'darwin'"
 ]
+groot_n1d6 = [
+    "lerobot[transformers-dep]",
+    "peft>=0.17.0,<1.0.0",
+    "dm-tree>=0.1.8,<1.0.0",
+    "albumentations>=1.4.0,<2.0.0",
+    "safetensors>=0.4.3,<1.0.0",
+    "Pillow>=10.0.0,<13.0.0",
+    "ninja>=1.11.1,<2.0.0",
+    "flash-attn>=2.7.0,<3.0.0 ; sys_platform != 'darwin'"
+]
 sarm = ["lerobot[transformers-dep]", "faker>=33.0.0,<35.0.0", "matplotlib>=3.10.3,<4.0.0", "qwen-vl-utils>=0.0.14"]
 xvla = ["lerobot[transformers-dep]"]
 hilserl = ["lerobot[transformers-dep]", "gym-hil>=0.1.13,<0.2.0", "lerobot[grpcio-dep]", "lerobot[placo-dep]"]
